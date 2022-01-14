@@ -85,4 +85,12 @@ class CostCalculatorServiceImplTest {
     double expectedCost = 200.0;
     assertEquals(expectedCost, costCalculatorService.computeCost(parcel));
   }
+
+  @Test
+  public void testLargeParcelComputeCostWithDiscount() {
+    GParcel parcel = new GParcel(10.0, 10, 20, 20);
+    double expectedCost = 187.75;
+    double discountedCost = costCalculatorService.computeCost(parcel, "MYNT");
+    assertEquals(expectedCost, discountedCost);
+  }
 }

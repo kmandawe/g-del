@@ -241,6 +241,30 @@ public class CostCalculatorControllerTest {
         .andExpect(jsonPath("$.details", hasItem("Length can't be null")));
   }
 
+  @Test
+  public void computeCostLargeParcelWithDiscountTest() throws Exception {
+
+    // Given
+    GParcel parcel = new GParcel(10.0, 10, 20, 20);
+    parcel.setVoucherCode("MYNT");
+    double expectedCost = 187.75;
+    String parcelPayload = getParcelPayload(parcel);
+
+    // When
+    RequestBuilder requestBuilder =
+        MockMvcRequestBuilders.post(COST_ENDPOINT)
+            .accept(MediaType.APPLICATION_JSON)
+            .content(parcelPayload)
+            .contentType(MediaType.APPLICATION_JSON);
+
+    // Then
+    mockMvc
+        .perform(requestBuilder)
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data").value(expectedCost));
+  }
+
   private String getParcelPayload(GParcel parcel) throws JsonProcessingException {
     ObjectMapper objMapper = new ObjectMapper();
     return objMapper.writeValueAsString(parcel);

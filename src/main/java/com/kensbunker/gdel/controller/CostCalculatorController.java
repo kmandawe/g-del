@@ -4,6 +4,7 @@ import com.kensbunker.gdel.request.GParcel;
 import com.kensbunker.gdel.response.ApiResponse;
 import com.kensbunker.gdel.service.CostCalculatorService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +24,15 @@ public class CostCalculatorController {
 
   @PostMapping
   public ApiResponse<Double> computeDeliveryCost(@Valid @RequestBody GParcel parcel) {
+    Double cost;
     log.info("Compute delivery cost request: {}", parcel);
-    Double cost = costCalculatorService.computeCost(parcel);
+    String voucherCode = parcel.getVoucherCode();
+    if (StringUtils.hasText(voucherCode)) {
+      log.info("Voucher code: {} will be applied.", voucherCode);
+      cost = costCalculatorService.computeCost(parcel, voucherCode);
+    } else {
+      cost = costCalculatorService.computeCost(parcel);
+    }
     log.info("Compute delivery cost response data: {}", cost);
     return new ApiResponse<>(cost);
   }
