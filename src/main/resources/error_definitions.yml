@@ -1,0 +1,4 @@
+errors:
+  - :code: 4001
+    :name: invalid_params
+    :message: JSON parameter is invalid
