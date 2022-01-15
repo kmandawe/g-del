@@ -31,6 +31,10 @@ might be additional rule, and precedence might change, implementation should
 be clean such that your service classes will not necessarily be modified if there will
 be changes or additions thus adhering to open-closed design principle.
 
+## Test-driven API development
+* For service layer tests, see [CostCalculatorServiceImplTest][2].
+* For API layer tests, see [CostCalculatorControllerTest][1].
+
 ## Running the Project
 
 This section defines how to set-up and run the project.
@@ -51,3 +55,7 @@ This section defines how to set-up and run the project.
 ```shell
 ./mvnw spring-boot:run
 ```
+
+<!-- References -->
+[1]: https://github.com/kmandawe/g-del/blob/master/src/test/java/com/kensbunker/gdel/controller/CostCalculatorControllerTest.java
+[2]: https://github.com/kmandawe/g-del/blob/master/src/test/java/com/kensbunker/gdel/service/impl/CostCalculatorServiceImplTest.java
